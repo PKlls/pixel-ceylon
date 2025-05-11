@@ -16,7 +16,14 @@ class PixelCanvas {
         this.pixels = new Map();
         this.cooldownTime = 30000; // 30 seconds
         this.lastPixelTime = this.getLastPixelTime();
-        this.socket = io();
+        // Configure Socket.IO to work in both local and deployed environments
+        const serverUrl = window.location.hostname === 'localhost' ? 'http://localhost:8080' : window.location.origin;
+        this.socket = io(serverUrl, {
+            transports: ['websocket'],
+            reconnection: true,
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000
+        });
 
         // Initialize tools
         this.initTools();
