@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 const PORT = process.env.PORT || 8080;
+const HOST = '0.0.0.0';
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '/')));
@@ -72,7 +73,6 @@ io.on('connection', (socket) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 8080;
-http.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+http.listen(PORT, HOST, () => {
+    console.log(`Server running on http://${HOST}:${PORT}`);
 });
