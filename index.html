@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelCeylon - Collaborative Pixel Art</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZhNTAwIiBkPSJNMjU2IDQ4QzE0MS4xIDQ4IDQ4IDE0MS4xIDQ4IDI1NnM5My4xIDIwOCAyMDggMjA4IDIwOC05My4xIDIwOC0yMDhTMzcwLjkgNDggMjU2IDQ4em0wIDM3MmMtOTAuNSAwLTE2NC03My41LTE2NC0xNjRzNzMuNS0xNjQgMTY0LTE2NCAxNjQgNzMuNSAxNjQgMTY0LTczLjUgMTY0LTE2NCAxNjR6Ii8+PHBhdGggZmlsbD0iI2ZmYTUwMCIgZD0iTTI1NiAxMjhjLTcwLjcgMC0xMjggNTcuMy0xMjggMTI4czU3LjMgMTI4IDEyOCAxMjggMTI4LTU3LjMgMTI4LTEyOC01Ny4zLTEyOC0xMjgtMTI4eiIvPjwvc3ZnPg==">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <div id="canvas-container">
+            <canvas id="pixel-canvas"></canvas>
+            
+            <div class="instructions">
+                <p>🖱️ Left Click: Draw pixels</p>
+                <p>👆 Right Click + Drag: Move canvas</p>
+                <p>🔄 Mouse Wheel: Zoom in/out</p>
+            </div>
+
+            <!-- Time Duration Table -->
+            <div class="time-duration-table">
+                <div class="time-info">
+                    <span id="pixel-status" class="time-value">Ready</span>
+                    <span id="next-pixel-time" class="time-value">0</span>
+                </div>
+            </div>
+
+            <!-- View controls (top right) -->
+            <div class="floating-controls view-controls">
+                <button id="zoom-in" title="Zoom In">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button id="zoom-out" title="Zoom Out">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button id="reset-view" title="Reset View">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                </button>
+            </div>
+
+            <!-- Tools (top left) -->
+            <div class="floating-controls tools-controls">
+                <button class="tool-button active" id="pen-tool" data-tool="pen" title="Pen Tool">
+                    <i class="fas fa-pen"></i>
+                </button>
+                <button class="tool-button" id="eraser-tool" data-tool="eraser" title="Eraser">
+                    <i class="fas fa-eraser"></i>
+                </button>
+                <button class="tool-button" id="picker-tool" data-tool="picker" title="Color Picker">
+                    <i class="fas fa-eye-dropper"></i>
+                </button>
+                <button class="tool-button" id="move-tool" data-tool="move" title="Move Canvas">
+                    <i class="fas fa-arrows-alt"></i>
+                </button>
+            </div>
+
+            <!-- Colors (bottom center) -->
+            <div class="floating-controls color-controls">
+                <div class="color-section">
+                    <div class="color-palette" id="color-palette"></div>
+                    <input type="color" id="custom-color" value="#000000">
+                </div>
+                <div class="cooldown-timer" id="cooldown-timer" style="display: none;">
+                    Wait: <span id="timer-count">30</span>s
+                </div>
+            </div>
+
+            <!-- Coordinates (bottom right) -->
+            <div class="coordinates">
+                <span id="coord-display">X: 0, Y: 0</span>
+            </div>
+
+            <!-- Online Users Counter -->
+            <div class="online-users">
+                <i class="fas fa-users"></i>
+                <span id="online-count">0</span> online
+            </div>
+
+            <!-- Chat Box -->
+            <div class="chat-container" id="chat-container">
+                <div class="chat-header">
+                    <button id="chat-toggle" class="chat-toggle" title="Toggle Chat">
+                        <i class="fas fa-comments"></i>
+                        <span class="unread-count" id="unread-count"></span>
+                    </button>
+                </div>
+                <div class="chat-panel">
+                    <div class="chat-controls">
+                        <select id="language-select" class="language-select">
+                            <option value="en">English</option>
+                            <option value="es">Español</option>
+                            <option value="fr">Français</option>
+                            <option value="de">Deutsch</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="ja">日本語</option>
+                            <option value="ko">한국어</option>
+                            <option value="zh">中文</option>
+                        </select>
+                        <button id="minimize-chat" class="minimize-chat" title="Minimize">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                    <div class="chat-messages" id="chat-messages"></div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chat-input" class="chat-input" placeholder="Type your message...">
+                        <button id="send-message" class="send-message">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>

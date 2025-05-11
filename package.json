@@ -1,0 +1,13 @@
+{
+  "name": "pixel-ceylon",
+  "version": "1.0.0",
+  "description": "A collaborative pixel art canvas celebrating Sri Lankan heritage",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  }
+}
