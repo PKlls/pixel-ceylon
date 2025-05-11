@@ -12,7 +12,7 @@ const HOST = '0.0.0.0';
 app.use(express.static(path.join(__dirname, '/')));
 
 // File to store pixel data
-const PIXEL_DATA_FILE = 'pixel_data.json';
+const PIXEL_DATA_FILE = path.join(__dirname, 'pixel_data.json');
 
 // Load saved pixels or start with empty map
 let pixels = new Map();
